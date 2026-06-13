@@ -24,6 +24,7 @@
   <canvas id="board" width="570" height="570"></canvas>
   <div id="controls">
     <button id="restart-btn">重新开始</button>
+    <button id="resign-btn">认输</button>
   </div>
 
   <script>
@@ -34,6 +35,7 @@
     const ctx = canvas.getContext("2d");
     const info = document.getElementById("info");
     const restartBtn = document.getElementById("restart-btn");
+    const resignBtn = document.getElementById("resign-btn");
 
     let board = [];
     let currentPlayer = 1; // 1=黑 2=白
@@ -127,6 +129,14 @@
     });
 
     restartBtn.addEventListener("click", initBoard);
+
+    resignBtn.addEventListener("click", () => {
+      if (gameOver) return;
+      gameOver = true;
+      const winner = currentPlayer === 1 ? 2 : 1;
+      info.textContent = (currentPlayer === 1 ? "黑" : "白") + "方认输，" + (winner === 1 ? "黑" : "白") + "方获胜！🏳️";
+      drawBoard();
+    });
 
     initBoard();
   </script>
