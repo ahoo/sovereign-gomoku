@@ -16,9 +16,6 @@
       cursor: pointer; background: #555; color: #fff; transition: background 0.2s;
     }
     button:hover { background: #333; }
-    #resign-btn { background: #c0392b; }
-    #resign-btn:hover { background: #922b21; }
-    #resign-btn:disabled { background: #aaa; cursor: default; }
   </style>
 </head>
 <body>
@@ -27,7 +24,6 @@
   <canvas id="board" width="570" height="570"></canvas>
   <div id="controls">
     <button id="restart-btn">重新开始</button>
-    <button id="resign-btn">认输</button>
   </div>
 
   <script>
@@ -37,7 +33,6 @@
     const canvas = document.getElementById("board");
     const ctx = canvas.getContext("2d");
     const info = document.getElementById("info");
-    const resignBtn = document.getElementById("resign-btn");
     const restartBtn = document.getElementById("restart-btn");
 
     let board = [];
@@ -49,7 +44,6 @@
       currentPlayer = 1;
       gameOver = false;
       info.textContent = "黑方落子";
-      resignBtn.disabled = false;
       drawBoard();
     }
 
@@ -125,19 +119,11 @@
       drawBoard();
       if (checkWin(row, col, currentPlayer)) {
         gameOver = true;
-        resignBtn.disabled = true;
         info.textContent = (currentPlayer === 1 ? "黑" : "白") + "方获胜！🎉";
         return;
       }
       currentPlayer = currentPlayer === 1 ? 2 : 1;
       info.textContent = (currentPlayer === 1 ? "黑" : "白") + "方落子";
-    });
-
-    resignBtn.addEventListener("click", () => {
-      if (gameOver) return;
-      gameOver = true;
-      resignBtn.disabled = true;
-      info.textContent = (currentPlayer === 1 ? "黑" : "白") + "方认输，" + (currentPlayer === 1 ? "白" : "黑") + "方获胜！";
     });
 
     restartBtn.addEventListener("click", initBoard);
