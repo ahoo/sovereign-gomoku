@@ -1,0 +1,16 @@
+{
+  "name": "sovereign-gomoku",
+  "version": "1.0.0",
+  "description": "Five in a row (Gomoku) web app for Sovereign-OS real scenario E2E validation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
