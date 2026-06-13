@@ -16,7 +16,6 @@
       cursor: pointer; background: #555; color: #fff; transition: background 0.2s;
     }
     button:hover { background: #333; }
-    button:disabled { background: #bbb; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -24,7 +23,6 @@
   <div id="info">黑方落子</div>
   <canvas id="board" width="570" height="570"></canvas>
   <div id="controls">
-    <button id="resign-btn">认输</button>
     <button id="restart-btn">重新开始</button>
   </div>
 
@@ -35,7 +33,6 @@
     const canvas = document.getElementById("board");
     const ctx = canvas.getContext("2d");
     const info = document.getElementById("info");
-    const resignBtn = document.getElementById("resign-btn");
     const restartBtn = document.getElementById("restart-btn");
 
     let board = [];
@@ -46,7 +43,6 @@
       board = Array.from({ length: BOARD_SIZE }, () => Array(BOARD_SIZE).fill(0));
       currentPlayer = 1;
       gameOver = false;
-      resignBtn.disabled = false;
       info.textContent = "黑方落子";
       drawBoard();
     }
@@ -123,21 +119,11 @@
       drawBoard();
       if (checkWin(row, col, currentPlayer)) {
         gameOver = true;
-        resignBtn.disabled = true;
         info.textContent = (currentPlayer === 1 ? "黑" : "白") + "方获胜！🎉";
         return;
       }
       currentPlayer = currentPlayer === 1 ? 2 : 1;
       info.textContent = (currentPlayer === 1 ? "黑" : "白") + "方落子";
-    });
-
-    resignBtn.addEventListener("click", () => {
-      if (gameOver) return;
-      if (!confirm("确定要认输吗？")) return;
-      gameOver = true;
-      resignBtn.disabled = true;
-      const winner = currentPlayer === 1 ? 2 : 1;
-      info.textContent = (winner === 1 ? "黑" : "白") + "方获胜！(" + (currentPlayer === 1 ? "黑" : "白") + "方认输)";
     });
 
     restartBtn.addEventListener("click", initBoard);
