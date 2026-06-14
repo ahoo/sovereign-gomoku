@@ -132,9 +132,11 @@
 
     resignBtn.addEventListener("click", () => {
       if (gameOver) return;
+      const playerName = currentPlayer === 1 ? "黑" : "白";
+      if (!confirm(playerName + "方确定要认输吗？")) return;
       gameOver = true;
       const winner = currentPlayer === 1 ? 2 : 1;
-      info.textContent = (currentPlayer === 1 ? "黑" : "白") + "方认输，" + (winner === 1 ? "黑" : "白") + "方获胜！🏳️";
+      info.textContent = playerName + "方认输，" + (winner === 1 ? "黑" : "白") + "方获胜！🏳️";
       drawBoard();
     });
 
